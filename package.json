@@ -13,7 +13,9 @@
     "@clerk/nextjs": "^4.29.9",
     "@google-cloud/cloud-sql-connector": "^1.2.4",
     "@google-cloud/storage": "^7.8.0",
+    "@google/generative-ai": "^0.3.1",
     "@neondatabase/serverless": "^0.9.0",
+    "@pinecone-database/doc-splitter": "^0.0.1",
     "@pinecone-database/pinecone": "^2.1.0",
     "@radix-ui/react-slot": "^1.0.2",
     "@tanstack/react-query": "^5.28.4",
@@ -28,7 +30,10 @@
     "langchain": "^0.1.28",
     "lucide-react": "^0.357.0",
     "next": "^14.1.4",
+<<<<<<< HEAD
     "pdf-parse": "^1.1.1",
+=======
+>>>>>>> 32c67952301a91e3598d6ca69dd6affc6de81bba
     "pg": "^8.11.3",
     "pinecone": "^0.1.0",
     "postgres": "^3.4.3",
