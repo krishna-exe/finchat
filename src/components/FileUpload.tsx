@@ -49,7 +49,7 @@ const FileUpload = () => {
         }
         mutate(data, {
           onSuccess: ( data ) => {
-            console.log(data);
+            console.log("file goog", data);
             toast.success(data.message);
             // router.push(`/chat/${chat_id}`);
           },
