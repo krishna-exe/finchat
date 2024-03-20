@@ -9,7 +9,7 @@ import {
 import { getEmbeddings } from "./embeddings";
 import { Vector } from "@pinecone-database/pinecone/dist/pinecone-generated-ts-fetch";
 // import { getEmbeddings } from "./embeddings";
-// import { convertToAscii } from "./utils";
+import { convertToAscii } from "./utils";
 
 export const pc = new Pinecone({
     apiKey: process.env.PINECONE_API_KEY!,
@@ -38,9 +38,19 @@ export async function LoadS3IntoPinecone(fileKey: string){
     //3. vectorize and embed individual docs
     const vectors = await Promise.all(documents.flat().map(embedDocument))
     //upload to pinecone
+    const namespace = index.namespace(convertToAscii(fileKey));
     console.log('Uploading to Pinecone')
-    await index.upsert(vectors);
-    return pages;
+    await namespace.upsert(vectors);
+    // return pages;
+
+    // const client = await getPineconeClient();
+    // const pineconeIndex = await client.index("chatpdf");
+    // const sd = pineconeIndex.namespace(convertToAscii(fileKey));
+  
+    // console.log("inserting vectors into pinecone");
+    // await namespace.upsert(vectors);
+  
+    return documents[0];
 }
 
 async function embedDocument(doc: Document) {
