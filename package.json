@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.536.0",
     "@clerk/nextjs": "^4.29.9",
     "@google-cloud/cloud-sql-connector": "^1.2.4",
     "@google-cloud/storage": "^7.8.0",
