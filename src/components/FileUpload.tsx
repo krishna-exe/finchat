@@ -44,7 +44,7 @@ const FileUpload = () => {
         setUploading(true);
         const data = await uploadToS3(file);
         if (!data?.file_key || !data.file_name) {
-          toast.error("Something went wrong");
+          toast.error("Something wents wrong");
           return;
         }
         mutate(data, {
