@@ -1,18 +1,28 @@
 import {GoogleGenerativeAI,HarmCategory,HarmBlockThreshold,} from "@google/generative-ai";
-import { GoogleGenerativeAIStream,StreamingTextResponse } from "ai";
+import { GoogleGenerativeAIStream,StreamingTextResponse,Message } from "ai";
 
 export const runtime="edge";
 const genai= new GoogleGenerativeAI(process.env.GEMINI_API_KEY!)
+
+// const buildGoogleGenAIPrompt = (messages: object) => ({
+//     contents: messages
+//       .filter((message:object) => message.role === 'user' || message.role === 'assistant')
+//       .map((message:object) => ({
+//         role: message.role === 'user' ? 'user' : 'model',
+//         parts: [{ text: message.content }],
+//       })),
+//   });
 
 export async function POST(req:Request){
     //TODO: Complete this after understanding message type
     try {
         const {messages}=await req.json();
-        console.log(messages[0].content)
+        console.log(typeof messages)
         const response=await genai.getGenerativeModel({model:"gemini-pro"})
-                .generateContentStream({
-            contents:[{role:'user',parts:[{text:messages[0].content}]}]
-        });
+            .generateContentStream(...messages.filter())
+        //         .generateContentStream({
+        //     contents:[{role:'user',parts:[{text:messages[0].content}]}]
+        // });
         const stream=GoogleGenerativeAIStream(response)
         return new StreamingTextResponse(stream)
     } catch (error) {
