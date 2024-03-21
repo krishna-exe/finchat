@@ -19,7 +19,6 @@ export default async function Home() {
 
             <div className="flex mt-2">
               {isAuth && <Button>Go to Chats</Button>}
-              
             </div>
             <p className="max-w-xxl mt-1 text-lg  text-white">
               Join your colleagues to instantly answer question related to annual report
