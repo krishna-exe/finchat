@@ -13,7 +13,7 @@ export async function getMatchesFromEmbeddings(
     const index = client.index('reports');
     const namespace = index.namespace(convertToAscii(fileKey));
     const queryResult = await namespace.query({
-      topK: 5,
+      topK: 3,
       vector: embeddings,
       includeMetadata: true,
     });
@@ -31,7 +31,7 @@ export async function getContext(query: string, fileKey: string) {
     
     // console.log("------------------------------------------------\nThese are the qualifying docs\n--------------------------\n"+matches+" ")
     const qualifyingDocs = matches.filter(
-        (match) => match.score && match.score > 0.7
+        (match) => match.score && match.score > 0.6
         );
         
         type Metadata = {
@@ -41,6 +41,6 @@ export async function getContext(query: string, fileKey: string) {
 
   let docs = qualifyingDocs.map((match) => (match.metadata as Metadata).text);
   // 5 vectors
-  console.log(docs)
+  // console.log(docs)
   return docs.join("\n").substring(0, 3000);
 }
