@@ -40,39 +40,38 @@ const ChatComponent = ({ chatId }: Props) => {
   }, [messages]);
   return (
     <div>
+      <div className="relative max-h-screen overflow-scroll h-screen" id="message-container">
+        {/* <div className="flex flex-col h-screen justify-end overflow-scroll" id="message-container"> */}
+        {/* Header */}
+        <div className="sticky top-0 inset-x-0 p-2 bg-white h-fit">
+          <h3 className="text-xl font-bold">Chat</h3>
+        </div>
 
-    
-    <div className="sticky top-0 inset-x-0 p-2 bg-white h-fit">
-        <h3 className="text-xl font-bold">Chat</h3>
-      </div>
-
-    {/* when max-h-screen, the form goes to the bottom, but goes out of the screen 
-        OG CODE
-        <div className="relative max-h-screen overflow-scroll" id="message-container">
-    */}
-    <div className="flex flex-col h-screen justify-end" id="message-container">
+        {/* when max-h-screen, the form goes to the bottom, but goes out of the screen 
+            OG CODE */}
 
       
-      {/* message list */}
-      <MessageList messages={messages} isLoading={isLoading} />
+        {/* message list */}
+        <MessageList messages={messages} isLoading={isLoading} />
 
-      <form
-        onSubmit={handleSubmit}
-        className="sticky bottom-0 inset-x-0 px-2 py-4 bg-white mt-2"
-      >
-        <div className="flex">
-          <Input
-            value={input}
-            onChange={handleInputChange}
-            placeholder="Ask any question..."
-            className="w-full"
-          />
-          <Button className="bg-blue-600 ml-2">
-            <Send className="h-4 w-4" />
-          </Button>
-        </div>
-      </form>
-    </div>
+        {/* Input */}
+        <form
+          onSubmit={handleSubmit}
+          className="sticky bottom-0 inset-x-0 px-2 py-4 bg-white mt-2 overflow-auto"
+        >
+          <div className="flex">
+            <Input
+              value={input}
+              onChange={handleInputChange}
+              placeholder="Ask any question..."
+              className="w-full"
+            />
+            <Button className="bg-blue-600 ml-2">
+              <Send className="h-4 w-4" />
+            </Button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 };
