@@ -41,16 +41,11 @@ const ChatComponent = ({ chatId }: Props) => {
   return (
     <div>
 
-    
-    <div className="sticky top-0 inset-x-0 p-2 bg-white h-fit">
-        <h3 className="text-xl font-bold">Chat</h3>
-      </div>
-
     {/* when max-h-screen, the form goes to the bottom, but goes out of the screen 
         OG CODE
         <div className="relative max-h-screen overflow-scroll" id="message-container">
     */}
-    <div className="flex flex-col h-screen justify-end" id="message-container">
+    <div className="flex flex-col h-screen justify-between" id="message-container">
 
       <div className="sticky top-0 inset-x-0 p-2 bg-white h-fit">
           <h3 className="text-xl font-bold">Chat</h3>
