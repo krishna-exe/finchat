@@ -16,12 +16,11 @@ export async function DownloadFromS3(file_key: string): Promise<string> {
       };
 
       const obj = await s3.getObject(params);
+      console.log('Checking if dir exists')
+      fs.existsSync("/tmp/") || fs.mkdirSync("/tmp/");
       const file_name = `/tmp/pdf-${Date.now().toString()}.pdf`;
 
       if (obj.Body instanceof require("stream").Readable) {
-        // AWS-SDK v3 has some issues with their typescript definitions, but this works
-        // https://github.com/aws/aws-sdk-js-v3/issues/843
-        //open the writable stream and write the file
         const file = fs.createWriteStream(file_name);
         file.on("open", function (fd) {
           // @ts-ignore
@@ -38,5 +37,3 @@ export async function DownloadFromS3(file_key: string): Promise<string> {
     }
   });
 }
-
-// downloadFromS3("uploads/1693568801787chongzhisheng_resume.pdf");

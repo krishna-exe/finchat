@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import FileUpload from "@/components/FileUpload";
 import { UserButton, auth } from "@clerk/nextjs";

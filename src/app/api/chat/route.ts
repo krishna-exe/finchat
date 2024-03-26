@@ -50,13 +50,14 @@ export async function POST(req:Request){
         console.log(`${context}`)
 
         // console.log(messages[messages.length - 1].content)
-        let prompt="";
+        let prompt="These are your previous messages\n";
         for(let i=0;i<messages.length-1;i++){
             prompt+=`${messages[i].content}\n`;
         }
         //AAYUSH PROMPT
-        prompt+=`AI assistant is a brand new, powerful, human-like artificial intelligence.
-            The traits of AI include expert knowledge, helpfulness, cleverness, and articulateness.
+        prompt+=`You are a chat with pdf AI assistant
+            AI assistant is a brand new, powerful, human-like artificial intelligence.
+            The traits of AI include expert knowledge, helpfulness and cleverness.
             AI is a well-behaved and well-mannered individual.
             AI is always friendly, kind, and inspiring, and he is eager to provide vivid and thoughtful responses to the user.
             AI has the sum of all knowledge in their brain, and is able to accurately answer nearly any question about any topic in conversation.
@@ -64,10 +65,10 @@ export async function POST(req:Request){
             ${context}
             END OF CONTEXT BLOCK
             AI assistant will take into account any CONTEXT BLOCK that is provided in a conversation.
-            If the terms in the question are given in the context, but the context does not provide an accurate answer, the AI assistan will answer with it's overall sense
+            If the terms in the question are given in the context, but the context does not provide an accurate answer, the AI assistant will answer with it's overall sense.
             If the context does not have any relation to the question, the AI assistant will say, "I'm sorry, but I don't know the answer to that question".
             AI assistant will not apologize for previous responses, but instead will indicated new information was gained.
-            This is my question:    ${lastMessage.content}`
+            This is the question:${lastMessage.content}`
 
         // prompt+=`You're a chat with pdf ai assistance.
 
@@ -89,7 +90,7 @@ export async function POST(req:Request){
         
             
         const generationConfig = {
-            temperature: 0.9,
+            temperature: 0.5,
             topK: 1,
             topP: 1,
             maxOutputTokens:2000,

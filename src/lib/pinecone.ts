@@ -8,7 +8,6 @@ import {
 } from "@pinecone-database/doc-splitter";
 import { getEmbeddings } from "./embeddings";
 import { Vector } from "@pinecone-database/pinecone/dist/pinecone-generated-ts-fetch";
-// import { getEmbeddings } from "./embeddings";
 import { convertToAscii } from "./utils";
 
 export const pc = new Pinecone({
