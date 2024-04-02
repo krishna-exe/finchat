@@ -20,7 +20,6 @@ const genai= new GoogleGenerativeAI(process.env.GEMINI_API_KEY!)
 //   });
 
 // export async function POST(req:Request){
-//     //TODO: Complete this after understanding message type
 //     try {
 //         const {messages}=await req.json();
 //         console.log(typeof messages)
@@ -37,7 +36,6 @@ const genai= new GoogleGenerativeAI(process.env.GEMINI_API_KEY!)
 // }
 
 export async function POST(req:Request){
-    //TODO: Complete this after understanding message type
     try {
         const {messages, chatId}=await req.json();
         const _chats = await db.select().from(chats).where(eq(chats.id, chatId));
@@ -56,12 +54,11 @@ export async function POST(req:Request){
         }
         //AAYUSH PROMPT
         prompt+=`
-            
-            Hello gemnini! I hope you are doing good. I have provided you with a context which is in the block named context. It is an annual report of a company where a person chats with gemini to get to know about the report. You have to answer the questions of the user. Be friendly, act like a human and explain the terms used in your reponse so that the user understands what the content is all about. Make sure the language is simple and easy to unserstand and use funky emojis in the response. Access the internet please.
+            Hello gemini! I hope you are doing good. I have provided you with a context which is in the block named context. It is an annual report of a company where a person chats with gemini to get to know about the report. You have to answer the questions of the user. Be friendly, act like a human and explain the terms used in your reponse so that the user understands what the content is all about. Make sure the language is simple and easy to unserstand. Access the internet please.
             START CONTEXT BLOCK
             ${context}
             END OF CONTEXT BLOCK
-            This is my question:    ${lastMessage.content}`
+            This is my question:${lastMessage.content}`
 
         // prompt+=`You're a chat with pdf ai assistance.
 

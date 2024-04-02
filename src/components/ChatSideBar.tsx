@@ -5,6 +5,18 @@ import React from "react";
 import { Button } from "./ui/button";
 import { MessageCircle, PlusCircle, Trash2, } from "lucide-react";
 import { cn } from "@/lib/utils";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
+
 
 type Props = {
   chats: DrizzleChat[];
@@ -13,47 +25,6 @@ type Props = {
 };
 
 const ChatSideBar = ({ chats, chatId, handleDelete}: Props) => {
-  const [deletingChatId, setDeletingChatId] = React.useState<number | null>(null);
-  // const [loading, setLoading] = React.useState(false);
-  // const deleteChat=async (chatId:number,file_key:string)=>{
-  //   try{
-  //     console.log(`Deleting ${chatId} ${file_key} ...`)
-      
-  //     //Deleting from S3
-  //     const s3 = new S3({
-  //       region: "ap-south-1",
-  //       credentials: {
-  //         accessKeyId: process.env.NEXT_PUBLIC_S3_ACCESS_KEY_ID!,
-  //         secretAccessKey: process.env.NEXT_PUBLIC_S3_SECRET_ACCESS_KEY!,
-  //       },
-  //     });
-  //     const params = {
-  //       Bucket: process.env.NEXT_PUBLIC_S3_BUCKET_NAME!,
-  //       Key: file_key,
-  //     };
-  //     const result =await s3.deleteObject(params);
-  //     if (result.DeleteMarker)
-  //       console.log(`${file_key} deleted from S3!!`);
-  //     else
-  //       console.log(`Error deleting ${file_key} from S3`);
-
-  //     // Deleting from Neon DB
-  //     // const deletedChats=await db.delete(ch).where(eq(ch.fileKey,file_key)).execute();
-  //     // const deletedMessages=await db.delete(messages).where(eq(messages.chatId,chatId)).execute();
-  //     // console.log(`${file_key} deleted from Neon DB!!`);
-  
-  //     //Deleting from pinecone
-  //     const pc = new Pinecone({ apiKey: process.env.PINECONE_API_KEY! })
-  //     const index = pc.index("reports")
-  //     await index.namespace(file_key).deleteAll();
-  //     console.log(`${file_key} deleted from Pinecone!!`)
-  
-  //     console.log(`${file_key} deleted successfully!!`)
-  //   }
-  //   catch(error){
-  //     console.error(error);
-  //   }
-  // };
   return (
     <div className="w-full h-screen overflow-scroll soff p-4 text-gray-200 bg-gray-900">
       <Link href="/">
@@ -69,28 +40,46 @@ const ChatSideBar = ({ chats, chatId, handleDelete}: Props) => {
             <div
               className={cn("rounded-lg p-3 text-slate-400 flex items-center", {
                 "bg-blue-600 text-white": chat.id === chatId,
-                "hover:text-white": chat.id !== chatId && chat.id!== deletingChatId,
-                "pointer-events-none bg-red-600": chat.id === deletingChatId,
+                "hover:text-white": chat.id !== chatId,
               })}
             >
               <MessageCircle className="mr-2" />
               <p className="w-full overflow-hidden text-sm truncate whitespace-nowrap">
                 {chat.pdfName}
               </p>
-              <Button
-                className={cn("px-2 ml-1 rounded-md",{
-                  "bg-blue-600 hover:text-black hover:bg-white":chat.id===chatId,
-                  "bg-primary/90 text-white hover:bg-white hover:text-black":chat.id!==chatId,
-                })}
-                onClick={(event)=>{
-                  event.preventDefault()
-                  handleDelete(chat.id,chat.fileKey);
-                  setDeletingChatId(chat.id);
-                  window.location.reload();
-                }}
-              >
-                  <Trash2 className="ml-auto"></Trash2>
-              </Button>
+              <AlertDialog>
+                <AlertDialogTrigger>
+                  <Button
+                    className={cn("px-2 ml-1 rounded-md",{
+                      "bg-blue-600 hover:text-black hover:bg-white":chat.id===chatId,
+                      "bg-primary/90 text-white hover:bg-white hover:text-black":chat.id!==chatId,
+                    })}
+                  >
+                      <Trash2 className="ml-auto"></Trash2>
+                  </Button>
+                </AlertDialogTrigger>
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>Deleting {chat.pdfName}</AlertDialogTitle>
+                    <AlertDialogDescription>
+                      Are you sure you want to delete this chat?
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                    <AlertDialogAction
+                      className="bg-red-600 hover:bg-red-700"
+                      onClick={async (event)=>{
+                        event.preventDefault()
+                        await handleDelete(chat.id,chat.fileKey);
+                        window.location.reload(); 
+                      }}
+                    >
+                      Delete
+                    </AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
             </div>
           </Link>
         ))}
