@@ -39,21 +39,13 @@ const ChatComponent = ({ chatId }: Props) => {
     }
   }, [messages]);
   return (
-    <div>
-
-    {/* when max-h-screen, the form goes to the bottom, but goes out of the screen 
-        OG CODE
-        <div className="relative max-h-screen overflow-scroll" id="message-container">
-    */}
-    <div className="flex flex-col max-h-screen relative justify-between overflow-scroll" id="message-container">
-
+    <div className="flex flex-col h-screen">
       <div className="sticky top-0 inset-x-0 p-2 bg-white h-fit">
-          <h3 className="text-xl font-bold">Chat</h3>
-        </div>
-      
-        {/* message list */}
+        <h3 className="text-xl font-bold">Chat</h3>
+      </div>
+      <div className="flex-grow overflow-auto" id="message-container">
         <MessageList messages={messages} isLoading={isLoading} />
-
+      </div>
       <form
         onSubmit={handleSubmit}
         className="sticky bottom-0 inset-x-0 px-2 py-4 bg-white mt-2"
@@ -70,7 +62,6 @@ const ChatComponent = ({ chatId }: Props) => {
           </Button>
         </div>
       </form>
-    </div>
     </div>
   );
 };
