@@ -45,7 +45,7 @@ const ChatComponent = ({ chatId }: Props) => {
         OG CODE
         <div className="relative max-h-screen overflow-scroll" id="message-container">
     */}
-    <div className="flex flex-col h-screen justify-between" id="message-container">
+    <div className="flex flex-col max-h-screen relative justify-between overflow-scroll" id="message-container">
 
       <div className="sticky top-0 inset-x-0 p-2 bg-white h-fit">
           <h3 className="text-xl font-bold">Chat</h3>
