@@ -70,6 +70,7 @@ export async function LoadS3IntoPinecone(fileKey: string){
     const namespace = index.namespace(convertToAscii(fileKey));
     console.log('Uploading to Pinecone')
     await namespace.upsert(vectors);
+    console.log('Upload complete')
 
     // return pages;
 
