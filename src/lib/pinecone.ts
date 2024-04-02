@@ -7,12 +7,17 @@ import {
   RecursiveCharacterTextSplitter,
 } from "@pinecone-database/doc-splitter";
 import { getEmbeddings } from "./embeddings";
-import { Vector } from "@pinecone-database/pinecone/dist/pinecone-generated-ts-fetch";
 import { convertToAscii } from "./utils";
+import { MilvusClient, InsertReq, DataType } from '@zilliz/milvus2-sdk-node';
 
 export const pc = new Pinecone({
     apiKey: process.env.PINECONE_API_KEY!,
   });
+// export const ms=new MilvusClient({
+//   address:'localhost:19530',
+//   username:process.env.MILVUS_USERNAME,
+//   password:process.env.MILVUS_PASSWORD,
+// });
 const index = pc.index('reports');
 type PDFPage = {
   pageContent: string;
@@ -37,9 +42,35 @@ export async function LoadS3IntoPinecone(fileKey: string){
     //3. vectorize and embed individual docs
     const vectors = await Promise.all(documents.flat().map(embedDocument))
     //upload to pinecone
+    // const coll_name=convertToAscii(fileKey)
+    // await ms.createCollection({
+    //   collection_name:coll_name,
+    //   fields:[
+    //     {
+    //       name:'id',
+    //       description:'ID Field',
+    //       data_type:DataType.Int64,
+    //       is_primary_key:true,
+    //       autoID:true,
+    //     },
+    //     {
+    //       name:'values',
+    //       description:'Embedding Field',
+    //       data_type:DataType.FloatVector,
+    //       dim:768,
+    //     }
+    //   ]
+    // });
+    // const params:InsertReq={
+    //   collection_name:coll_name,
+    //   fields_data:vectors,
+    // };
+    // await ms.insert(params);
+    // console.log('Uploaded to Milvus')
     const namespace = index.namespace(convertToAscii(fileKey));
     console.log('Uploading to Pinecone')
     await namespace.upsert(vectors);
+
     // return pages;
 
     // const client = await getPineconeClient();
@@ -62,10 +93,10 @@ async function embedDocument(doc: Document) {
       metadata: {
         text: doc.metadata.text,
         pageNumber: doc.metadata.pageNumber,
-      } ,
+      },
     }as PineconeRecord;
   } catch (error) {
-    console.log("error embedding document", error);
+    console.error("Error embedding document", error);
     throw error;
   }
 }

@@ -30,6 +30,7 @@ export async function uploadToS3(
         }
       );
     } catch (error) {
+      console.error("Error uploading to S3", error);
       reject(error);
     }
   });
