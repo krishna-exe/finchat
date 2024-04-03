@@ -122,7 +122,7 @@ async function prepareDocument(page: PDFPage) {
       pageContent,
       metadata: {
         pageNumber: metadata.loc.pageNumber,
-        text: truncateStringByBytes(pageContent, 100),
+        text: truncateStringByBytes(pageContent, 3600),
       },
     }),
   ]);

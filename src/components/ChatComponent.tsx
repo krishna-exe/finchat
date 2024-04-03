@@ -8,6 +8,7 @@ import MessageList from "./MessageList";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { Message } from "ai";
+import Markdown from 'react-markdown'
 
 type Props = { chatId: number };
 
@@ -49,6 +50,7 @@ const ChatComponent = ({ chatId }: Props) => {
       </div>
       <div className="flex-grow overflow-auto" id="message-container">
         <MessageList messages={messages} isLoading={isLoading} />
+      
       </div>
       <form
         onSubmit={handleSubmit}
