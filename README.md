@@ -24,7 +24,7 @@ pnpm dev
 bun dev
 ```
 
-Create a ```.env``` file in the roor direcrory and define all the required API keys
+Create a ```.env``` file in the root direcrory and define all the required API keys
 An example .env has been provided for you to follow!
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
