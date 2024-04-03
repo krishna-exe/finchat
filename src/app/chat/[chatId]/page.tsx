@@ -10,6 +10,7 @@ import React from "react";
 import { S3 } from "@aws-sdk/client-s3";
 import { chats as ch,messages } from "@/lib/db/schema";
 import { Pinecone } from "@pinecone-database/pinecone";
+import fs from "fs";
 
 type Props = {
 	params: {
@@ -64,6 +65,9 @@ const ChatPage = async ({ params: { chatId } }: Props) => {
 			const index = pc.index("reports");
 			await index.namespace(file_key).deleteAll();
 			console.log(`${chatId} ${file_key} deleted from Pinecone!!`);
+
+			//TODO: Deleting from local storage
+			// fs.unlinkSync(`C:\\tmp\\1712050625988annual-report-fy-22-23-pg178.pdf`);
 
 			console.log(`${chatId} ${file_key} deleted successfully!!`);
 		} catch (error) {

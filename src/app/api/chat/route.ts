@@ -21,7 +21,6 @@ const genai= new GoogleGenerativeAI(process.env.GEMINI_API_KEY!)
 //   });
 
 // export async function POST(req:Request){
-//     //TODO: Complete this after understanding message type
 //     try {
 //         const {messages}=await req.json();
 //         console.log(typeof messages)
@@ -38,7 +37,6 @@ const genai= new GoogleGenerativeAI(process.env.GEMINI_API_KEY!)
 // }
 
 export async function POST(req:Request){
-    //TODO: Complete this after understanding message type
     try {
         const {messages, chatId}=await req.json();
         const _chats = await db.select().from(chats).where(eq(chats.id, chatId));

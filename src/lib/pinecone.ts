@@ -126,7 +126,7 @@ async function prepareDocument(page: PDFPage) {
       },
     }),
   ]);
-  console.log(docs)
+  // console.log(docs)
   return docs;
 }
 
