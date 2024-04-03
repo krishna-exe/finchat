@@ -2,6 +2,7 @@ import { cn } from "@/lib/utils";
 import { Message } from "ai/react";
 import { Loader2 } from "lucide-react";
 import React from "react";
+import ReactMarkdown from 'react-markdown';
 
 type Props = {
   isLoading: boolean;
@@ -36,7 +37,7 @@ const MessageList = ({ messages, isLoading }: Props) => {
                 }
               )}
             >
-              <p>{message.content}</p>
+              <p><ReactMarkdown>{message.content}</ReactMarkdown></p>
             </div>
           </div>
         );

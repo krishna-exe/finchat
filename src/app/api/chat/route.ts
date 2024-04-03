@@ -5,6 +5,7 @@ import { chats, messages as _messages } from "@/lib/db/schema";
 import { eq } from "drizzle-orm";
 import { NextResponse } from "next/server";
 import { getContext } from "@/lib/context";
+import Markdown from 'react-markdown'
 
 export const runtime="edge";
 
@@ -54,33 +55,35 @@ export async function POST(req:Request){
         for(let i=0;i<messages.length-1;i++){
             prompt+=`${messages[i].content}\n`;
         }
-        //AAYUSH PROMPT
+        
         prompt+=`
+        You are a chat with pdf AI assistant
+        AI assistant is a brand new, powerful, human-like artificial intelligence.
+        The traits of AI include expert knowledge, helpfulness and cleverness.
+        I have provided you with a context which is in the block named context. 
+        It is an annual report of a company where a person chats with gemini to get to know about the report. You have to answer the questions of the user. 
+        Be friendly, act like a human and explain the terms used in your reponse so that the user understands what the content is all about. Make sure the language is simple and easy to understand. Access the internet please. please use proper maths and conversions.
+        START CONTEXT BLOCK
+        ${context}
+        END OF CONTEXT BLOCK
+        This is my question:    ${lastMessage.content}`
             
-            Hello gemnini! I hope you are doing good. I have provided you with a context which is in the block named context. It is an annual report of a company where a person chats with gemini to get to know about the report. You have to answer the questions of the user. Be friendly, act like a human and explain the terms used in your reponse so that the user understands what the content is all about. Make sure the language is simple and easy to unserstand and use funky emojis in the response. Access the internet please.
-            START CONTEXT BLOCK
-            ${context}
-            END OF CONTEXT BLOCK
-            This is my question:    ${lastMessage.content}`
-
-        // prompt+=`You're a chat with pdf ai assistance.
-
-        // I've providing you with the most relevant text from pdf attached by user and your job is to read the following text delimited by delimiter #### carefully word by word and answer the prompt requested by user.
-        
-        // Prompt will be initialised by the word "Prompt".
-        
-        // ####
-        // ${context}
-        // ####
-        
-        // Prompt: ${lastMessage.content}
-        
-        // Give answer in a friendly tone with being crisp and precise in your answer. DONOT use any buzzwords, make sure your language is simple and easy to understand. 
-        
-        // If user asks something unrelated to the pdf or book, simply reply with your overall sense.
-        
-        // If you don't know the answer, just say "I don't know" or "I'm not sure".`
-        
+            //AAYUSH PROMPT
+            // prompt+=`You are a chat with pdf AI assistant
+            //AI assistant is a brand new, powerful, human-like artificial intelligence.
+            //The traits of AI include expert knowledge, helpfulness and cleverness.
+            //AI is a well-behaved and well-mannered individual.
+            //AI is always friendly, kind, and inspiring, and he is eager to provide vivid and thoughtful responses to the user.
+            //AI has the sum of all knowledge in their brain, and is able to accurately answer nearly any question about any topic in conversation.
+            //START CONTEXT BLOCK
+            //${context}
+            //END OF CONTEXT BLOCK
+            //AI assistant will take into account any CONTEXT BLOCK that is provided in a conversation.
+            //If the terms in the question are given in the context, but the context does not provide an accurate answer, the AI assistant will answer with it's overall sense.
+            //If the context does not have any relation to the question, the AI assistant will say, "I'm sorry, but I don't know the answer to that question".
+            //AI assistant will not apologize for previous responses, but instead will indicated new information was gained.
+            //This is the question:${lastMessage.content}`
+            // prompt+=`You're a chat with pdf ai assistance.
             
         const generationConfig = {
             temperature: 0.5,

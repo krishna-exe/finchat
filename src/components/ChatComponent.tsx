@@ -8,6 +8,7 @@ import MessageList from "./MessageList";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { Message } from "ai";
+import Markdown from 'react-markdown'
 
 type Props = { chatId: number };
 
@@ -53,7 +54,7 @@ const ChatComponent = ({ chatId }: Props) => {
       
         {/* message list */}
         <MessageList messages={messages} isLoading={isLoading} />
-
+      
       <form
         onSubmit={handleSubmit}
         className="sticky bottom-0 inset-x-0 px-2 py-4 bg-white mt-2"
