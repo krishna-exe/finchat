@@ -75,7 +75,7 @@ const ChatSideBar = ({ chats, chatId, handleDelete}: Props) => {
                     <AlertDialogAction
                       className="bg-red-600 hover:bg-red-700"
                       onClick={async (event)=>{
-                        event.preventDefault()
+                        event.preventDefault();
                         setIsDeleting(true);
                         await handleDelete(chat.id,chat.fileKey);
                         setIsDeleting(false);
@@ -84,11 +84,13 @@ const ChatSideBar = ({ chats, chatId, handleDelete}: Props) => {
                         window.location.reload(); 
                       }}
                     >
-                      {isDeleting? (
-                        <Loader2 className="w-6 h-6 animate-spin" />
-                      ):(
-                        "Delete"
-                      )}
+                      <div className="justify-center w-20">
+                        {isDeleting? (
+                          <Loader2 className="w-6 h-6 animate-spin" />
+                        ):(
+                          "Delete"
+                        )}
+                      </div>
                     </AlertDialogAction>
                   </AlertDialogFooter>
                 </AlertDialogContent>

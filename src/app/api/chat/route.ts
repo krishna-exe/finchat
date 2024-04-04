@@ -62,7 +62,8 @@ export async function POST(req:Request){
         I have provided you with a context which is in the block named context. 
         The user chats with FinChat to understand the paper.
         You have to answer the questions of the user. 
-        Be friendly, act like a human and explain the terms used in your reponse so that the user understands what the content is all about.
+        Be friendly and cheerful.
+        Act like a human and explain the terms used in your reponse so that the user understands what the content is all about.
         Make sure the language is simple and easy to understand. 
         Access the internet . 
         Use proper maths and conversions.
