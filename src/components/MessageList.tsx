@@ -21,6 +21,10 @@ const MessageList = ({ messages, isLoading }: Props) => {
   return (
     <div className="flex flex-col gap-2 px-4">
       {messages.map((message) => {
+        const Icon = message.role === "user"? User : Bot;
+        const icon = (
+          <Icon size={16} className={message.role === "user"? "absolute " : "absolute"} />
+        );
         return (
           <div
             key={message.id}
