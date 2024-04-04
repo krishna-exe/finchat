@@ -8,8 +8,6 @@ import axios from "axios";
 import { toast } from "react-hot-toast";
 import { useRouter } from "next/navigation";
 
-
-
 const FileUpload = () => {
   const router = useRouter();
   const [uploading, setUploading] = React.useState(false);
@@ -31,32 +29,40 @@ const FileUpload = () => {
 
   const { getRootProps, getInputProps } = useDropzone({
     accept: { "application/pdf": [".pdf"] },
-    maxFiles: 1,
+    maxFiles: 10,
     onDrop: async (acceptedFiles) => {
-      const file = acceptedFiles[0];
-      // if (file.size > 10 * 1024 * 1024) {
-      //   // bigger than 10mb!
-      //   toast.error("File too large");
-      //   return;
-      // }
-
       try {
         setUploading(true);
-        const data = await uploadToS3(file);
-        if (!data?.file_key || !data.file_name) {
-          toast.error("Something wents wrong");
-          return;
-        }
-        mutate(data, {
-          onSuccess: ( {chat_id} ) => {
-            // console.log("file goog", data);
-            toast.success("Chat created!");
-            router.push(`/chat/${chat_id}`);
-          },
-          onError: (err) => {
-            toast.error("Error creating chat");
-            console.error(err);
-          },
+    
+        const uploadPromises = acceptedFiles.map(async (file) => {
+          const data = await uploadToS3(file);
+          if (!data?.file_key ||!data.file_name) {
+            toast.error("Something went wrong with the file: " + file.name);
+            return;
+          }
+          return { file, data };
+        });
+    
+        const uploadResults = await Promise.allSettled(uploadPromises);
+    
+        const successfulUploads = uploadResults.filter(
+          (result) => result.status === "fulfilled"
+        ) as Array<PromiseFulfilledResult<{ file: File; data: { file_key: string; file_name: string; }; }>>;
+    
+        const chatData = successfulUploads.map((upload) => upload.value.data);
+        chatData.forEach((data) => {
+          mutate(data, {
+            onSuccess: (chatData) => {
+              if (chatData && chatData.chat_id) {
+                toast.success("Chat created!");
+                router.push(`/chat/${chatData.chat_id}`);
+              }
+            },
+            onError: (err) => {
+              toast.error("Error creating chat");
+              console.error(err);
+            },
+          });
         });
       } catch (error) {
         console.error(error);
