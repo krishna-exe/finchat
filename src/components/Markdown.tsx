@@ -1,7 +1,7 @@
-import React from 'react'
+// import React from 'react'
 
-type Props= {
+// type Props= {
 
-}
+// }
 
-cons
+// cons
