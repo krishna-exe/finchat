@@ -71,7 +71,7 @@ const ChatSideBar = ({ chats, chatId, handleDelete}: Props) => {
                     </AlertDialogDescription>
                   </AlertDialogHeader>
                   <AlertDialogFooter>
-                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                    <AlertDialogCancel disabled={isDeleting}>Cancel</AlertDialogCancel>
                     <AlertDialogAction
                       className="bg-red-600 hover:bg-red-700"
                       onClick={async (event)=>{
@@ -84,7 +84,7 @@ const ChatSideBar = ({ chats, chatId, handleDelete}: Props) => {
                         window.location.reload(); 
                       }}
                     >
-                      <div className="justify-center w-20">
+                      <div className="flex justify-center items-center w-20">
                         {isDeleting? (
                           <Loader2 className="w-6 h-6 animate-spin" />
                         ):(
