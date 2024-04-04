@@ -17,7 +17,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
 import { useRouter } from "next/navigation";
-
+import toast from "react-hot-toast";
 
 type Props = {
   chats: DrizzleChat[];
@@ -82,6 +82,7 @@ const ChatSideBar = ({ chats, chatId, handleDelete}: Props) => {
                         if (nextChatId) push(`/chat/${nextChatId}`);
                         else push("/");
                         window.location.reload(); 
+                        toast.success("Chat deleted");
                       }}
                     >
                       <div className="flex justify-center items-center w-20">
