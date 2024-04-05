@@ -3,7 +3,7 @@ import { Message } from "ai/react";
 import { Loader2, User, BotMessageSquare   } from "lucide-react";
 import React from "react";
 import ReactMarkdown from 'react-markdown';
-import markdownit from 'markdown-it';
+// import markdownit from 'markdown-it';
 
 type Props = {
   isLoading: boolean;
