@@ -23,7 +23,8 @@ const MessageList = ({ messages, isLoading }: Props) => {
   const greetingMessage = {
     id: 'greeting',
     role: 'assistant',
-    content: `Hello! How can I assist you today?\nThese are the questions that can be asked related to the given PDF:\n`,
+    content: `Hello! How can I assist you today?\
+      These are the questions that can be asked related to the given PDF:\n`,
   }
 
   const allmessages = [greetingMessage,...messages];
@@ -31,10 +32,6 @@ const MessageList = ({ messages, isLoading }: Props) => {
   return (
     <div className="flex flex-col gap-2 px-4">
       {allmessages.map((message, index) => {
-        // const Icon = message.role === "user"? User : Bot;
-        // const icon = (
-          // <Icon size={16} className={message.role === "user"? "absolute " : "absolute"} />
-        // );
         return (
           <div
             key={message.id}

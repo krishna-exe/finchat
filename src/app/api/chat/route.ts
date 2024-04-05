@@ -49,12 +49,12 @@ export async function POST(req:Request){
         console.log(`${context}`)
 
         // console.log(messages[messages.length - 1].content)
-        let prompt="These are your previous messages\n";
+        let prompt="\nYour previous messages are in the PREVIOUS block\nPREVIOUS START\n";
         for(let i=0;i<messages.length-1;i++){
             prompt+=`${messages[i].content}\n`;
         }
         
-        prompt+=`
+        prompt+=`PREVIOUS END\n
         Your name is FinChat.
         You are a chat with annual report assistant.
         AI assistant is a brand new, powerful, human-like artificial intelligence.
@@ -116,7 +116,7 @@ export async function POST(req:Request){
                 });
             },
         });
-            // console.log(lastMessage)
+            // console.log(prompt)
         return new StreamingTextResponse(stream)
     } catch (error) {
         console.error(error)
