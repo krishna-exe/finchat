@@ -11,10 +11,7 @@ const PDFViewer = ({ pdf_url }: Props) => {
         width="100%"
         height="685px"
       >
-        <p>
-          Your web browser doesn't have a PDF plugin. Instead, you can{" "}
-          <a href={pdf_url}>click here to download the PDF file.</a>
-        </p>
+
       </object>
     </div>
   );
