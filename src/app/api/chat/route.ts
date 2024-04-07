@@ -46,34 +46,40 @@ export async function POST(req:Request){
         const fileKey = _chats[0].fileKey;
         const lastMessage = messages[messages.length - 1];
         const context = await getContext(lastMessage.content, fileKey);
-        console.log(`${context}`)
+        // console.log(`${context}`)
 
         // console.log(messages[messages.length - 1].content)
-        let prompt="\nYour previous messages are in the PREVIOUS block\nPREVIOUS START\n";
-        for(let i=0;i<messages.length-1;i++){
-            prompt+=`${messages[i].content}\n`;
-        }
+        // let prompt="These are your previous messages\n";
+        // for(let i=0;i<messages.length-1;i++){
+        //     prompt+=`${messages[i].content}\n`;
+        // }
         
-        prompt+=`PREVIOUS END\n
+        let prompt=`
         Your name is FinChat.
         You are a chat with annual report assistant.
-        AI assistant is a brand new, powerful, human-like artificial intelligence.
-        The traits of AI include expert knowledge, helpfulness and cleverness.
+        Finchat is a brand new, powerful, human-like artificial intelligence.
+        The traits of Finchat include expert knowledge, helpfulness and cleverness.
         I have provided you with a context which is in the block named context. 
-        The user chats with FinChat to understand the paper.
+        The user chats with FinChat to understand the annual report.
         You have to answer the questions of the user. 
+        The questions can have synonymous words related to the document. Understand the synonym.
         Be friendly and cheerful.
+        Address the document while reponding.
         Act like a human and explain the terms used in your reponse so that the user understands what the content is all about.
         Make sure the language is simple and easy to understand. 
-        Access the internet . 
         Use proper maths and conversions.
+        Give insights about the data.
+
         START CONTEXT BLOCK
         ${context}
         END OF CONTEXT BLOCK
-        If the terms in my question are not given in the context, but the context does not provide an accurate answer, you can answer with your overall sense.
-        If the context does not provide the answer to question, the AI assistant will say, "I'm sorry, but I don't know the answer to that question".
-        This is my question:    ${lastMessage.content}\n`
-            
+        You have to respond to this:    ${lastMessage.content}\n
+        With respect to the previous chat history mentioned below, improve your new response based on it:\n`
+        
+        prompt+="This the previous chat history:\n";
+        for(let i=0;i<messages.length-1;i++){
+            prompt+=`${messages[i].content}\n`;
+        }
             //AAYUSH PROMPT
             // prompt+=`You are a chat with pdf AI assistant
             //AI assistant is a brand new, powerful, human-like artificial intelligence.
@@ -116,7 +122,7 @@ export async function POST(req:Request){
                 });
             },
         });
-            // console.log(prompt)
+             console.log(prompt)
         return new StreamingTextResponse(stream)
     } catch (error) {
         console.error(error)

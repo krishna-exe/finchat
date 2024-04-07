@@ -24,7 +24,7 @@ const MessageList = ({ messages, isLoading }: Props) => {
     id: 'greeting',
     role: 'assistant',
     content: `Hello! How can I assist you today?\
-      These are the questions that can be asked related to the given PDF:\n`,
+      Ask me any question related to the uploaded PDF!\n`,
   }
 
   const allmessages = [greetingMessage,...messages];
