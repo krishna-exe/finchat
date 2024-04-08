@@ -49,8 +49,7 @@ const ChatComponent = ({ chatId }: Props) => {
         <h3 className="text-xl font-bold">Chat</h3>
       </div>
       <div className="flex-grow overflow-auto" id="message-container">
-        <MessageList messages={messages} isLoading={isLoading} />
-      
+        <MessageList messages={messages} isLoading={isLoading} />   
       </div>
       <form
         onSubmit={handleSubmit}

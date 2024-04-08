@@ -11,6 +11,7 @@
   "dependencies": {
     "@aws-sdk/client-s3": "^3.537.0",
     "@clerk/nextjs": "^4.29.9",
+    "@clerk/themes": "^1.7.11",
     "@google-cloud/cloud-sql-connector": "^1.2.4",
     "@google-cloud/storage": "^7.8.0",
     "@google/generative-ai": "^0.3.1",
@@ -47,7 +48,8 @@
     "react-query": "^3.39.3",
     "react-resizable": "^3.0.5",
     "tailwind-merge": "^2.2.1",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "web-streams-polyfill": "^4.0.0"
   },
   "devDependencies": {
     "@types/node": "^20",
