@@ -18,14 +18,14 @@ import {
 } from "@/components/ui/alert-dialog"
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
+import axios from "axios";
 
 type Props = {
   chats: DrizzleChat[];
   chatId: number;
-  handleDelete:(chatId:number,file_key:string)=>void;
 };
 
-const ChatSideBar = ({ chats, chatId, handleDelete}: Props) => {
+const ChatSideBar = ({ chats, chatId}: Props) => {
   const currentChatIndex = chats.findIndex(chat => chat.id === chatId);
   const nextChatId = chats[(currentChatIndex + 1)%chats.length]?.id;
   const { push }=useRouter();
@@ -71,13 +71,18 @@ const ChatSideBar = ({ chats, chatId, handleDelete}: Props) => {
                     </AlertDialogDescription>
                   </AlertDialogHeader>
                   <AlertDialogFooter>
-                    <AlertDialogCancel disabled={isDeleting}>Cancel</AlertDialogCancel>
+                    <AlertDialogCancel disabled={isDeleting} className="hover:bg-gray-200">Cancel</AlertDialogCancel>
                     <AlertDialogAction
                       className="bg-red-600 hover:bg-red-700"
                       onClick={async (event)=>{
                         event.preventDefault();
                         setIsDeleting(true);
-                        await handleDelete(chat.id,chat.fileKey);
+                        // handleDelete(chat.id, chat.fileKey);
+                        const response=await axios.post("/api/delete-chat", {
+                          chatId: chat.id,
+                          file_key: chat.fileKey
+                        });
+                        console.log(response.data.message);
                         setIsDeleting(false);
                         if (nextChatId) push(`/chat/${nextChatId}`);
                         else push("/");
