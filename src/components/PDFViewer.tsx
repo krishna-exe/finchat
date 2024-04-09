@@ -11,7 +11,6 @@ const PDFViewer = ({ pdf_url }: Props) => {
         width="100%"
         height="685px"
       >
-
       </object>
     </div>
   );

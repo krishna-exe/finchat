@@ -31,7 +31,7 @@ export async function getContext(query: string, fileKey: string) {
     
     // console.log("------------------------------------------------\nThese are the qualifying docs\n--------------------------\n"+matches+" ")
     const qualifyingDocs = matches.filter(
-        (match) => match.score && match.score > 0.3
+        (match) => match.score && match.score > 0.7
         );
         
         type Metadata = {
@@ -42,5 +42,5 @@ export async function getContext(query: string, fileKey: string) {
   let docs = qualifyingDocs.map((match) => (match.metadata as Metadata).text);
   // 5 vectors
   // console.log(docs)
-  return docs.join("\n").substring(0, 20000);
+  return docs.join("\n");
 }

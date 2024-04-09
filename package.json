@@ -11,6 +11,7 @@
   "dependencies": {
     "@aws-sdk/client-s3": "^3.537.0",
     "@clerk/nextjs": "^4.29.9",
+    "@clerk/themes": "^1.7.11",
     "@google-cloud/cloud-sql-connector": "^1.2.4",
     "@google-cloud/storage": "^7.8.0",
     "@google/generative-ai": "^0.3.1",
@@ -54,8 +55,12 @@
     "react-pdf": "^7.7.1",
     "react-query": "^3.39.3",
     "react-resizable": "^3.0.5",
+    "react-speech": "^1.0.2",
+    "react-speech-recognition": "^3.10.0",
+    "regenerator-runtime": "^0.14.1",
     "tailwind-merge": "^2.2.1",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "web-streams-polyfill": "^4.0.0"
   },
   "devDependencies": {
     "@types/dompurify": "^3.0.5",
@@ -64,6 +69,7 @@
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "@types/react-resizable": "^3.0.7",
+    "@types/react-speech-recognition": "^3.9.5",
     "autoprefixer": "^10.0.1",
     "drizzle-kit": "^0.20.14",
     "eslint": "^8",
