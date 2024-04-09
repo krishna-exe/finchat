@@ -69,6 +69,7 @@ export async function POST(req:Request){
         Make sure the language is simple and easy to understand. 
         Use proper maths and conversions.
         Give insights about the data.
+        When asked for any visual graphs answer it by coding it in python using matplotlib .
 
         START CONTEXT BLOCK
         ${context}
@@ -100,7 +101,7 @@ export async function POST(req:Request){
         const generationConfig = {
             temperature: 0.5,
             topK: 1,
-            topP: 1,
+            topP: 0.5,
             maxOutputTokens:2000,
             };
         const response=await genai
@@ -115,11 +116,11 @@ export async function POST(req:Request){
                 });
             },
             onCompletion: async (completion) =>{
-                await db.insert(_messages).values({
-                    chatId,
-                    content:completion,
-                    role:'system',
-                });
+                    await db.insert(_messages).values({
+                        chatId,
+                        content:completion,
+                        role:'system',
+                    });        
             },
         });
              console.log(prompt)
