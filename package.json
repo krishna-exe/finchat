@@ -53,6 +53,9 @@
     "react-pdf": "^7.7.1",
     "react-query": "^3.39.3",
     "react-resizable": "^3.0.5",
+    "react-speech": "^1.0.2",
+    "react-speech-recognition": "^3.10.0",
+    "regenerator-runtime": "^0.14.1",
     "tailwind-merge": "^2.2.1",
     "tailwindcss-animate": "^1.0.7"
   },
@@ -63,6 +66,7 @@
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "@types/react-resizable": "^3.0.7",
+    "@types/react-speech-recognition": "^3.9.5",
     "autoprefixer": "^10.0.1",
     "drizzle-kit": "^0.20.14",
     "eslint": "^8",
