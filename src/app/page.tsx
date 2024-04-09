@@ -34,7 +34,7 @@ export default async function Home() {
               {isAuth && firstChat && (
               <>
                 <Link href={`/chat/${firstChat.id}`}>
-                <Button>
+                <Button className="hover:bg-gray-800">
                   Go to Chats <ArrowRight className="ml-2" />
                 </Button>
                 </Link>
@@ -49,7 +49,7 @@ export default async function Home() {
               <FileUpload/>
               ) : (
               <Link href="/sign-in">
-                <Button>
+                <Button className="hover:bg-gray-800">
                 Login to get Started!
                 <LogIn className="w-4 h-4 ml-2" />
                 </Button>
