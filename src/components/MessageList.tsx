@@ -4,8 +4,8 @@ import { Loader2, User, BotMessageSquare   } from "lucide-react";
 import React from "react";
 import ReactMarkdown from 'react-markdown';
 import markdownit from 'markdown-it';
-// import Markdown from "react-markdown";
-import Markdown from  '@/components/Markdown'
+import Markdown from "react-markdown";
+// import Markdown from  '@/components/Markdown'
 
 type Props = {
   isLoading: boolean;
@@ -49,8 +49,8 @@ const MessageList = ({ messages, isLoading }: Props) => {
                 }
               )}
             >
-              {/* <p><ReactMarkdown>{message.content}</ReactMarkdown></p> */}
-              <p><Markdown text={message.content}/></p>
+              <p><ReactMarkdown>{message.content}</ReactMarkdown></p>
+              {/* <p><Markdown text={message.content}/></p> */}
                {/* {icon} */}
               {message.role === 'user' ? 
                 <User size={30} color='black'   

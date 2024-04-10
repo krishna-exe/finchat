@@ -6,6 +6,17 @@ import { eq } from "drizzle-orm";
 import { NextResponse } from "next/server";
 import { getContext } from "@/lib/context";
 
+
+async function createFile(content:string) {
+
+    fs.writeFile("test.txt", content, err => {
+      if (err) {
+        console.error(err);
+        return;
+      }
+      console.log(`File created created successfully!`);
+    });
+  }
 export const runtime="edge";
 
 const genai= new GoogleGenerativeAI(process.env.GEMINI_API_KEY!)
@@ -21,14 +32,20 @@ export async function POST(req:Request){
         const lastMessage = messages[messages.length - 1];
         const context = await getContext(lastMessage.content, fileKey);
         // console.log(`${context}`)
-
+        
         // console.log(messages[messages.length - 1].content)
         // let prompt="These are your previous messages\n";
         // for(let i=0;i<messages.length-1;i++){
-        //     prompt+=`${messages[i].content}\n`;
-        // }
+            //     prompt+=`${messages[i].content}\n`;
+            // }
+            
+              // console.log(messages[messages.length - 1].content)
+        let prompt="These are your previous messages\n";
+        for(let i=0;i<messages.length-1;i++){
+            prompt+=`${messages[i].content}\n`;
+        }
         
-        let prompt=`
+        prompt+=`
         Your name is FinChat.
         You are a chat with annual report assistant.
         Finchat is a brand new, powerful, human-like artificial intelligence.
@@ -47,13 +64,9 @@ export async function POST(req:Request){
         START CONTEXT BLOCK
         ${context}
         END OF CONTEXT BLOCK
-        You have to respond to this:${lastMessage.content}\n
-        Refer to the previous chat history mentioned below and improve your new response based on it:\n`;
+        You have to respond to this:${lastMessage.content}\n\n`
         
         // prompt+="This the previous chat history:\n";
-        for(let i=0;i<messages.length-1;i++){
-            prompt+=`${messages[i].role}: ${messages[i].content}\n`;
-        }
             //AAYUSH PROMPT
             // prompt+=`You are a chat with pdf AI assistant
             //AI assistant is a brand new, powerful, human-like artificial intelligence.
@@ -72,9 +85,9 @@ export async function POST(req:Request){
             // prompt+=`You're a chat with pdf ai assistance.
             
         const generationConfig = {
-            temperature: 0.5,
+            temperature: 0.7,
             topK: 1,
-            topP: 1,
+            topP: 0.95,
             maxOutputTokens:2000,
             };
         const response=await genai
@@ -89,6 +102,9 @@ export async function POST(req:Request){
                 });
             },
             onCompletion: async (completion) =>{
+                if (completion.includes('matplotlib')) {
+                    await createFile(completion); // Call your function
+                  }
                     await db.insert(_messages).values({
                         chatId,
                         content:completion,
@@ -96,7 +112,7 @@ export async function POST(req:Request){
                     });        
             },
         });
-        //  console.log(prompt)
+         console.log(prompt)
         return new StreamingTextResponse(stream)
     } catch (error) {
         console.error(error)
