@@ -3,7 +3,6 @@ import { eq } from "drizzle-orm";
 import { S3 } from "@aws-sdk/client-s3";
 import { chats as ch,messages } from "@/lib/db/schema";
 import { Pinecone } from "@pinecone-database/pinecone";
-import fs from 'fs';
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
