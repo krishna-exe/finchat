@@ -10,7 +10,9 @@ import type {
 import { toolbarPlugin } from '@react-pdf-viewer/toolbar';
 import { pageNavigationPlugin } from '@react-pdf-viewer/page-navigation';
 import { zoomPlugin } from '@react-pdf-viewer/zoom';
+import { defaultLayoutPlugin } from '@react-pdf-viewer/default-layout';
 
+import '@react-pdf-viewer/default-layout/lib/styles/index.css';
 
 // Import the styles
 import '@react-pdf-viewer/core/lib/styles/index.css';
@@ -23,11 +25,12 @@ const PDFViewer = ({ pdf_url }: Props) => {
   const toolbarPluginInstance = toolbarPlugin();
   const pageNavigationPluginInstance = pageNavigationPlugin();
   const zoomPluginInstance = zoomPlugin();
+  const defaultLayoutPluginInstance = defaultLayoutPlugin();
   // const { renderDefaultToolbar, Toolbar } = toolbarPluginInstance;
 
   return (
     <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/legacy/build/pdf.worker.js">
-      <Viewer fileUrl={pdf_url} plugins={[toolbarPluginInstance, zoomPluginInstance]} />
+      <Viewer fileUrl={pdf_url} plugins={[ defaultLayoutPluginInstance]} />
       </Worker>
   );
 };
