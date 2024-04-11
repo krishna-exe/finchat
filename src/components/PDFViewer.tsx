@@ -19,6 +19,7 @@ import '@react-pdf-viewer/core/lib/styles/index.css';
 import '@react-pdf-viewer/toolbar/lib/styles/index.css';
 import '@react-pdf-viewer/zoom/lib/styles/index.css';
 
+
 type Props = { pdf_url: string };
 
 const PDFViewer = ({ pdf_url }: Props) => {
@@ -29,9 +30,9 @@ const PDFViewer = ({ pdf_url }: Props) => {
   // const { renderDefaultToolbar, Toolbar } = toolbarPluginInstance;
 
   return (
-    <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/legacy/build/pdf.worker.js">
-      <Viewer fileUrl={pdf_url} plugins={[ defaultLayoutPluginInstance]} />
-      </Worker>
+    <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.11.174/legacy/build/pdf.worker.js">
+      <Viewer fileUrl={pdf_url} plugins={[ defaultLayoutPluginInstance]} theme="dark"/>
+    </Worker>
   );
 };
 

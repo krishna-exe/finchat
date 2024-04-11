@@ -30,6 +30,7 @@ const ChatSideBar = ({ chats, chatId}: Props) => {
   const nextChatId = chats[(currentChatIndex + 1)%chats.length]?.id;
   const { push }=useRouter();
   const [isDeleting, setIsDeleting] = useState(false);
+  const [isDeleted,setIsDeleted]=useState(false);
   return (
     <div className="w-full h-screen overflow-scroll soff p-4 text-gray-200 bg-gray-900">
       <Link href="/">
@@ -71,9 +72,10 @@ const ChatSideBar = ({ chats, chatId}: Props) => {
                     </AlertDialogDescription>
                   </AlertDialogHeader>
                   <AlertDialogFooter>
-                    <AlertDialogCancel disabled={isDeleting} className="hover:bg-gray-200">Cancel</AlertDialogCancel>
+                    <AlertDialogCancel disabled={isDeleting||isDeleted} className="hover:bg-gray-200">Cancel</AlertDialogCancel>
                     <AlertDialogAction
                       className="bg-red-600 hover:bg-red-700"
+                      disabled={isDeleted}
                       onClick={async (event)=>{
                         event.preventDefault();
                         setIsDeleting(true);
@@ -83,6 +85,7 @@ const ChatSideBar = ({ chats, chatId}: Props) => {
                         });
                         console.log(response.data.message);
                         setIsDeleting(false);
+                        setIsDeleted(true);
                         if (nextChatId) push(`/chat/${nextChatId}`);
                         else push("/");
                         window.location.reload(); 
