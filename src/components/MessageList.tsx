@@ -3,9 +3,6 @@ import { Message } from "ai/react";
 import { Loader2, User, BotMessageSquare   } from "lucide-react";
 import React from "react";
 import ReactMarkdown from 'react-markdown';
-import markdownit from 'markdown-it';
-// import Markdown from "react-markdown";
-import Markdown from  '@/components/Markdown'
 
 type Props = {
   isLoading: boolean;
@@ -24,7 +21,7 @@ const MessageList = ({ messages, isLoading }: Props) => {
     id: 'greeting',
     role: 'assistant',
     content: `Hello! How can I assist you today?\
-      Ask me any question related to the uploaded PDF!\n`,
+      Ask me any question related to the uploaded report!\n`,
   }
 
   const allmessages = [greetingMessage,...messages];
@@ -48,9 +45,12 @@ const MessageList = ({ messages, isLoading }: Props) => {
                   "bg-blue-600 shadow-md ring-1 text-white mr-6 ": message.role === "user",
                 }
               )}
-            >
-              {/* <p><ReactMarkdown>{message.content}</ReactMarkdown></p> */}
-              <p><Markdown text={message.content}/></p>
+            > 
+              {/* {message.content.includes('matplotlib')?
+                  <ChartComponent code={`1000+2000`}/>
+                : */}
+                <p><ReactMarkdown>{message.content}</ReactMarkdown></p> 
+                                     
                {/* {icon} */}
               {message.role === 'user' ? 
                 <User size={30} color='black'   

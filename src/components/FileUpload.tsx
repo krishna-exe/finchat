@@ -65,6 +65,7 @@ const FileUpload = () => {
           });
         });
       } catch (error) {
+        toast.error("Error uploading PDF");
         console.error(error);
       } finally {
         setUploading(false);

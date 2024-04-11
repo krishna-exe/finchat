@@ -8,7 +8,7 @@ import { getContext } from "@/lib/context";
 
 export const runtime="edge";
 
-const genai= new GoogleGenerativeAI(process.env.GEMINI_API_KEY!)
+const genai= new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
 
 export async function POST(req:Request){
     try {
@@ -20,20 +20,15 @@ export async function POST(req:Request){
         const fileKey = _chats[0].fileKey;
         const lastMessage = messages[messages.length - 1];
         const context = await getContext(lastMessage.content, fileKey);
-        // console.log(`${context}`)
-
-        // console.log(messages[messages.length - 1].content)
-        // let prompt="These are your previous messages\n";
-        // for(let i=0;i<messages.length-1;i++){
-        //     prompt+=`${messages[i].content}\n`;
-        // }
+        console.log(`${context}`)
         
         let prompt=`
         Your name is FinChat.
         You are a chat with annual report assistant.
         Finchat is a brand new, powerful, human-like artificial intelligence.
         The traits of Finchat include expert knowledge, helpfulness and cleverness.
-        I have provided you with a context which is in the block named context. 
+        I have provided you with a context which is in the block named context.
+        I have provided previous chats in a block named history 
         The user chats with FinChat to understand the annual report.
         You have to answer the questions of the user. 
         The questions can have synonymous words related to the document. Understand the synonym.
@@ -43,16 +38,18 @@ export async function POST(req:Request){
         Make sure the language is simple and easy to understand. 
         Use proper maths and conversions.
         Give insights about the data.
+        If asked to create graphs or charts, refer context for values and write code using python.
         START CONTEXT BLOCK
         ${context}
         END OF CONTEXT BLOCK
-        You have to respond to this:${lastMessage.content}\n
-        Refer to the previous chat history mentioned below and improve your new response based on it:\n`;
-        
-        // prompt+="This the previous chat history:\n";
+        START HISTORY BLOCK`
         for(let i=0;i<messages.length-1;i++){
             prompt+=`${messages[i].role}: ${messages[i].content}\n`;
         }
+        prompt+=`END OF HISTORY BLOCK
+        Respond to this considering given history:${lastMessage.content}\n`;
+        
+        // prompt+="This the previous chat history:\n";
             //AAYUSH PROMPT
             // prompt+=`You are a chat with pdf AI assistant
             //AI assistant is a brand new, powerful, human-like artificial intelligence.
@@ -71,9 +68,9 @@ export async function POST(req:Request){
             // prompt+=`You're a chat with pdf ai assistance.
             
         const generationConfig = {
-            temperature: 0.7,
+            temperature: 0.5,
             topK: 3,
-            maxOutputTokens:5000,
+            maxOutputTokens:7000,
         };
         const response=await genai
             .getGenerativeModel({model:"gemini-pro",generationConfig})
@@ -88,9 +85,9 @@ export async function POST(req:Request){
             },
             onCompletion: async (completion) =>{
                 await db.insert(_messages).values({
-                    chatId,
-                    content:completion,
-                    role:'system',
+                  chatId,
+                  content: completion,
+                  role: 'system',
                 });
             },
         });

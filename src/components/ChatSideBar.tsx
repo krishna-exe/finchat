@@ -77,7 +77,6 @@ const ChatSideBar = ({ chats, chatId}: Props) => {
                       onClick={async (event)=>{
                         event.preventDefault();
                         setIsDeleting(true);
-                        // handleDelete(chat.id, chat.fileKey);
                         const response=await axios.post("/api/delete-chat", {
                           chatId: chat.id,
                           file_key: chat.fileKey
