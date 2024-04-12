@@ -8,7 +8,7 @@ import {
 } from "@pinecone-database/doc-splitter";
 import { getEmbeddings } from "./embeddings";
 import { convertToAscii } from "./utils";
-import { MilvusClient, InsertReq, DataType } from '@zilliz/milvus2-sdk-node';
+import {NextResponse} from "next/server";
 
 export const pc = new Pinecone({
     apiKey: process.env.PINECONE_API_KEY!,
@@ -42,7 +42,9 @@ export async function LoadS3IntoPinecone(fileKey: string){
     console.log('Uploading to Pinecone');
     await namespace.upsert(vectors);
     console.log('Upload complete');
-    return documents[0];
+    return NextResponse.json(
+      {status: 200}
+     );
 }
 
 async function embedDocument(doc: Document) {
