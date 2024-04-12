@@ -50,7 +50,7 @@ export default async function Home() {
               ) : (
               <Link href="/sign-in">
                 <Button className="hover:bg-gray-800">
-                Login to get Started!
+                Login to get Started
                 <LogIn className="w-4 h-4 ml-2" />
                 </Button>
               </Link>

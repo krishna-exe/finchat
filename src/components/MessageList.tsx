@@ -3,14 +3,30 @@ import { Message } from "ai/react";
 import { Loader2, User, BotMessageSquare   } from "lucide-react";
 import React from "react";
 import ReactMarkdown from 'react-markdown';
-import markdownit from 'markdown-it';
-import Markdown from "react-markdown";
-// import Markdown from  '@/components/Markdown'
+import Highcharts from 'highcharts'
+import HighchartsReact from 'highcharts-react-official'
 
 type Props = {
   isLoading: boolean;
   messages: Message[];
 };
+
+function getOptions(code:string){
+  console.log(`CODE::::::${code}`);
+  code=code.replace(/`/g, "").replace(/,\s(?=\{)/g, ",");
+  const startIndex = code.indexOf("r',{") + 3;
+  const endIndex = code.lastIndexOf(")");
+  console.log(`STARTINDEX::::::${startIndex}`);
+  console.log(`ENDINDEX::::::${endIndex}`);
+  const match = code.substring(startIndex, endIndex);
+  console.log(`MATCH::::::${match}`)
+  if (match) {
+    return match;
+  } else {
+    console.error("Chart configuration not found");
+    return {};
+  }
+}
 
 const MessageList = ({ messages, isLoading }: Props) => {
   // if (isLoading) {
@@ -24,13 +40,13 @@ const MessageList = ({ messages, isLoading }: Props) => {
     id: 'greeting',
     role: 'assistant',
     content: `Hello! How can I assist you today?\
-      Ask me any question related to the uploaded PDF!\n`,
+      Ask me any question related to the uploaded report!\n`,
   }
 
   const allmessages = [greetingMessage,...messages];
   if (!allmessages) return <></>;
   return (
-    <div className="flex flex-col gap-2 px-4">
+    <div className="flex flex-col gap-2 px-4">    
       {allmessages.map((message, index) => {
         return (
           <div
@@ -48,9 +64,15 @@ const MessageList = ({ messages, isLoading }: Props) => {
                   "bg-blue-600 shadow-md ring-1 text-white mr-6 ": message.role === "user",
                 }
               )}
-            >
-              <p><ReactMarkdown>{message.content}</ReactMarkdown></p>
-              {/* <p><Markdown text={message.content}/></p> */}
+            > 
+              {(message.content.includes('Highcharts') && message.content.startsWith('```java') ) ?
+                  <HighchartsReact
+                      highcharts={Highcharts}
+                      options={eval('('+getOptions(message.content)+')')}
+                  />
+                :
+                <p><ReactMarkdown>{message.content}</ReactMarkdown></p> 
+              }                  
                {/* {icon} */}
               {message.role === 'user' ? 
                 <User size={30} color='black'   

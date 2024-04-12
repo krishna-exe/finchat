@@ -26,18 +26,18 @@ export async function getMatchesFromEmbeddings(
 
 export async function getContext(query: string, fileKey: string) {
     
-    const queryEmbeddings = await getEmbeddings(query);
-    const matches = await getMatchesFromEmbeddings(queryEmbeddings, fileKey);
-    
-    // console.log("------------------------------------------------\nThese are the qualifying docs\n--------------------------\n"+matches+" ")
-    const qualifyingDocs = matches.filter(
-        (match) => match.score && match.score > 0.7
-        );
-        
-        type Metadata = {
-            text: string;
-            pageNumber: number;
-        };
+  const queryEmbeddings = await getEmbeddings(query);
+  const matches = await getMatchesFromEmbeddings(queryEmbeddings, fileKey);
+  
+  // console.log("------------------------------------------------\nThese are the qualifying docs\n--------------------------\n"+matches+" ")
+  const qualifyingDocs = matches.filter(
+      (match) => match.score && match.score > 0.6
+  );
+      
+  type Metadata = {
+      text: string;
+      pageNumber: number;
+  };
 
   let docs = qualifyingDocs.map((match) => (match.metadata as Metadata).text);
   // 5 vectors
