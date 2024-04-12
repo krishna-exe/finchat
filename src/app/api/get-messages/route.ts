@@ -10,6 +10,7 @@ export const POST = async (req: Request) => {
   const _messages = await db
     .select()
     .from(messages)
-    .where(eq(messages.chatId, chatId));
+    .where(eq(messages.chatId, chatId))
+    .orderBy(messages.id);
   return NextResponse.json(_messages);
 };

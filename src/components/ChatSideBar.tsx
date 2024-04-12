@@ -86,8 +86,10 @@ const ChatSideBar = ({ chats, chatId}: Props) => {
                         console.log(response.data.message);
                         setIsDeleting(false);
                         setIsDeleted(true);
-                        if (nextChatId) push(`/chat/${nextChatId}`);
-                        else push("/");
+                        if (nextChatId) 
+                          push(`/chat/${nextChatId}`);
+                        else 
+                          push("/");
                         window.location.reload(); 
                         toast.success("Chat deleted");
                       }}

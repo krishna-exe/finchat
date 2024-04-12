@@ -38,7 +38,7 @@ export async function POST(req:Request){
         Make sure the language is simple and easy to understand. 
         Use proper maths and conversions.
         Give insights about the data.
-        If asked to create graphs or charts, refer context for values and write code for chart using HighCharts.js.
+        If asked to create graphs or charts, refer context for values and write code for chart using HighCharts.js .
         START CONTEXT BLOCK
         ${context}
         END OF CONTEXT BLOCK

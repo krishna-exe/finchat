@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
 import { Message } from "ai/react";
-import { Loader2, User, BotMessageSquare   } from "lucide-react";
+import { User, BotMessageSquare   } from "lucide-react";
 import React from "react";
 import ReactMarkdown from 'react-markdown';
 import Highcharts from 'highcharts'
@@ -13,15 +13,11 @@ type Props = {
 
 function getOptions(code:string){
   console.log(`CODE::::::${code}`);
-  code=code.replace(/`/g, "").replace(/,\s(?=\{)/g, ",");
-  const startIndex = code.indexOf("r',{") + 3;
-  const endIndex = code.lastIndexOf(")");
-  console.log(`STARTINDEX::::::${startIndex}`);
-  console.log(`ENDINDEX::::::${endIndex}`);
-  const match = code.substring(startIndex, endIndex);
-  console.log(`MATCH::::::${match}`)
+  const regex = /\{([\s\S]*)\}/;
+  const match = regex.exec(code);
   if (match) {
-    return match;
+    console.log(`MATCH::::::${match[1]}`);
+    return match[1];
   } else {
     console.error("Chart configuration not found");
     return {};
@@ -29,13 +25,6 @@ function getOptions(code:string){
 }
 
 const MessageList = ({ messages, isLoading }: Props) => {
-  // if (isLoading) {
-  //   return (
-  //     <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-  //       <Loader2 className="w-6 h-6 animate-spin" />
-  //     </div>
-  //   );
-  // }
   const greetingMessage = {
     id: 'greeting',
     role: 'assistant',
@@ -65,13 +54,13 @@ const MessageList = ({ messages, isLoading }: Props) => {
                 }
               )}
             > 
-              {(message.content.includes('Highcharts') && message.content.startsWith('```java') ) ?
+              {(message.content.includes('Highcharts') && message.content.startsWith('```java') && message.content.endsWith(");\n```")) ?
                   <HighchartsReact
                       highcharts={Highcharts}
-                      options={eval('('+getOptions(message.content)+')')}
+                      options={eval('({'+getOptions(message.content)+'})')}
                   />
                 :
-                <p><ReactMarkdown>{message.content}</ReactMarkdown></p> 
+                <p><ReactMarkdown>{message.content.replace(/`/g,'')}</ReactMarkdown></p> 
               }                  
                {/* {icon} */}
               {message.role === 'user' ? 

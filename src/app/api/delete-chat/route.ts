@@ -3,7 +3,6 @@ import { eq } from "drizzle-orm";
 import { S3 } from "@aws-sdk/client-s3";
 import { chats as ch,messages } from "@/lib/db/schema";
 import { Pinecone } from "@pinecone-database/pinecone";
-import fs from 'fs';
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
@@ -37,9 +36,6 @@ export async function POST(req: Request) {
         const index = pc.index("reports");
         await index.namespace(file_key).deleteAll();
         console.log(`${chatId} ${file_key} deleted from Pinecone`);
-
-        //TODO: Deleting from local storage
-        // fs.unlinkSync(`C:\\tmp\\1712050625988annual-report-fy-22-23-pg178.pdf`);
         
         console.log(`${chatId} ${file_key} deleted successfully`);
         return NextResponse.json({message: `${chatId} ${file_key} deleted successfully`},{status:200});

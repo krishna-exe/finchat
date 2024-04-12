@@ -8,7 +8,6 @@ import {
 } from "@pinecone-database/doc-splitter";
 import { getEmbeddings } from "./embeddings";
 import { convertToAscii } from "./utils";
-import { MilvusClient, InsertReq, DataType } from '@zilliz/milvus2-sdk-node';
 
 export const pc = new Pinecone({
     apiKey: process.env.PINECONE_API_KEY!,
@@ -25,7 +24,7 @@ export async function LoadS3IntoPinecone(fileKey: string){
     console.log('Downloading file from S3')
     const file_name=await DownloadFromS3(fileKey);
     if(!file_name){
-      throw new Error('Not downloaded');
+      throw new Error('Not downloaded from S3');
     }
     const loader = new PDFLoader(file_name);
     const pages = (await loader.load()) as PDFPage[];
