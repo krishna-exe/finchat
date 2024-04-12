@@ -54,11 +54,15 @@ const MessageList = ({ messages, isLoading }: Props) => {
                 }
               )}
             > 
+            
               {(message.content.includes('Highcharts') && message.content.startsWith('```java') && message.content.endsWith(");\n```")) ?
+                  <div style={{ width: '100%', height: '100%' }}>
                   <HighchartsReact
                       highcharts={Highcharts}
                       options={eval('({'+getOptions(message.content)+'})')}
+                      containerProps={{ style: { width: '300px', height: '100%' } }}
                   />
+              </div>
                 :
                 <p><ReactMarkdown>{message.content.replace(/`/g,'')}</ReactMarkdown></p> 
               }                  
