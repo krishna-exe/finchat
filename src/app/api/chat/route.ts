@@ -6,17 +6,6 @@ import { eq } from "drizzle-orm";
 import { NextResponse } from "next/server";
 import { getContext } from "@/lib/context";
 
-
-async function createFile(content:string) {
-
-    fs.writeFile("test.txt", content, err => {
-      if (err) {
-        console.error(err);
-        return;
-      }
-      console.log(`File created created successfully!`);
-    });
-  }
 export const runtime="edge";
 
 const genai= new GoogleGenerativeAI(process.env.GEMINI_API_KEY!)
