@@ -11,6 +11,6 @@ export const POST = async (req: Request) => {
     .select()
     .from(messages)
     .where(eq(messages.chatId, chatId))
-    .orderBy(messages.Id);
+    .orderBy(messages.id);
   return NextResponse.json(_messages);
 };
