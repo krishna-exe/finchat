@@ -1,21 +1,19 @@
 ## Project flow
-![image](https://github.com/user-attachments/assets/4805aa72-a418-4ad1-a254-249856595060)
-
+![flow](https://github.com/user-attachments/assets/501f3839-31d4-4e8d-8af4-5c59ee39b1b7)
 
 ## Project screenshots
+![1](https://github.com/user-attachments/assets/74647229-eaac-4d17-9d86-281cd4c85d68)
 
-![image](https://github.com/user-attachments/assets/007904d8-a452-487f-a1ae-04dbd872dfec)
+![2](https://github.com/user-attachments/assets/b7493866-f616-4485-9406-6b5727aeecd8)
 
-![image](https://github.com/user-attachments/assets/677b6d5c-c86f-4d04-b637-4749ded40d2d)
+![3](https://github.com/user-attachments/assets/640214f1-f9bf-4b15-8afc-3cc68429c3df)
 
-![image](https://github.com/user-attachments/assets/138d4b4a-ff7a-49e2-8864-4379e73a6f5b)
+![4](https://github.com/user-attachments/assets/7c4b8d5b-dd0a-4e23-8f8f-a0ddeedce019)
 
-![image](https://github.com/user-attachments/assets/c32607c1-54ec-41a0-877b-ccbda20f6bb4)
-
-![image](https://github.com/user-attachments/assets/c6dc22f1-8d1d-4b3a-80e2-2418c41764de)
-
+![5](https://github.com/user-attachments/assets/d7701c58-9019-42ab-b7de-22aab5af302a)
 
 ## Getting Started
+
 Install the dependencies
 
 ```bash
