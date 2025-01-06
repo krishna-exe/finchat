@@ -13,7 +13,7 @@ import {NextResponse} from "next/server";
 export const pc = new Pinecone({
     apiKey: process.env.PINECONE_API_KEY!,
   });
-const index = pc.index('reports');
+const index = pc.index('reports1');
 type PDFPage = {
   pageContent: string;
   metadata: {
