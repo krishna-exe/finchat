@@ -10,7 +10,7 @@ export async function getMatchesFromEmbeddings(
     const client = new Pinecone({
         apiKey: process.env.PINECONE_API_KEY!,
       });
-    const index = client.index('reports');
+    const index = client.index('reports1');
     const namespace = index.namespace(convertToAscii(fileKey));
     const queryResult = await namespace.query({
       topK: 3,
