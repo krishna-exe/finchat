@@ -55,7 +55,7 @@ export async function POST(req:Request){
             maxOutputTokens:5000,
         };
         const response=await genai
-            .getGenerativeModel({model:"gemini-pro",generationConfig})
+            .getGenerativeModel({model:"gemini-1.5-flash",generationConfig})
             .generateContentStream(prompt);
         const stream=GoogleGenerativeAIStream(response, {
             onStart: async () => {
